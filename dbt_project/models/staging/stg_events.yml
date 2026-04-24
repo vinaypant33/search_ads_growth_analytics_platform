@@ -1,0 +1,93 @@
+version: 2
+
+sources:
+  - name: raw
+    database: search_ads_analytics
+    schema: raw
+    description: Raw source schema containing ingested clickstream events.
+    tables:
+      - name: raw_events
+        description: Raw e-commerce clickstream events loaded from the original CSV into PostgreSQL.
+        columns:
+          - name: event_id
+            description: Auto-generated event row identifier.
+            tests:
+              - not_null
+              - unique
+
+          - name: event_time
+            description: Timestamp of the event in UTC.
+            tests:
+              - not_null
+
+          - name: event_type
+            description: Type of user event in the product funnel.
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['view', 'cart', 'purchase']
+
+          - name: product_id
+            description: Product identifier associated with the event.
+            tests:
+              - not_null
+
+          - name: user_id
+            description: User identifier.
+            tests:
+              - not_null
+
+models:
+  - name: stg_events
+    description: Cleaned staging model for e-commerce clickstream events. Applies timestamp parsing, event type standardization, date extraction, and basic validity filters.
+    columns:
+      - name: event_id
+        description: Unique event row identifier.
+        tests:
+          - not_null
+          - unique
+
+      - name: event_time
+        description: UTC event timestamp.
+        tests:
+          - not_null
+
+      - name: event_date
+        description: Calendar date derived from event_time.
+        tests:
+          - not_null
+
+      - name: event_hour
+        description: Hour of day extracted from event_time.
+
+      - name: event_day_of_week
+        description: Day of week extracted from event_time.
+
+      - name: event_month
+        description: Month derived from event_time.
+
+      - name: event_type
+        description: Standardized event type.
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['view', 'cart', 'purchase']
+
+      - name: product_id
+        description: Product identifier.
+        tests:
+          - not_null
+
+      - name: category_id
+        description: Category identifier.
+
+      - name: price
+        description: Product/event price as numeric value.
+
+      - name: user_id
+        description: User identifier.
+        tests:
+          - not_null
+
+      - name: user_session
+        description: Session identifier used for journey/sessionization analysis.
