@@ -1,0 +1,30 @@
+# Virtual environment
+venv/
+env/
+
+# Environment variables - NEVER commit
+.env
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+profiles.yml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files (large CSVs)
+data/raw/*.csv
+data/processed/*.csv
