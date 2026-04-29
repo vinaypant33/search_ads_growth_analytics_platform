@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: fact_sessions
+    description: Session-level fact table built from cleaned clickstream events. One row represents one user session with engagement, funnel, and revenue indicators.
+
+    columns:
+      - name: user_session
+        description: Unique session identifier.
+        tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: User associated with the session.
+        tests:
+          - not_null
+
+      - name: session_start
+        description: First event timestamp in the session.
+        tests:
+          - not_null
+
+      - name: session_end
+        description: Last event timestamp in the session.
+        tests:
+          - not_null
+
+      - name: session_duration_minutes
+        description: Duration of the session in minutes.
+
+      - name: events_in_session
+        description: Number of events in the session.
+        tests:
+          - not_null
+
+      - name: unique_products_viewed
+        description: Number of distinct products touched during the session.
+
+      - name: has_view
+        description: Flag indicating whether the session had at least one view event.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: has_cart
+        description: Flag indicating whether the session had at least one cart event.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: has_purchase
+        description: Flag indicating whether the session had at least one purchase event.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: view_events
+        description: Number of view events in the session.
+
+      - name: cart_events
+        description: Number of cart events in the session.
+
+      - name: purchase_events
+        description: Number of purchase events in the session.
+
+      - name: session_revenue
+        description: Revenue generated in the session from purchase events only.
+
+      - name: journey_pattern
+        description: Classified session journey pattern based on view, cart, and purchase flags.
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - view_cart_purchase
+                - view_cart_no_purchase
+                - view_purchase_no_cart
+                - view_only
+                - cart_purchase_no_view
+                - purchase_only
+                - other
