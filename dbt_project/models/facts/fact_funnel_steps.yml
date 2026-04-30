@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: fact_funnel_steps
+    description: Daily funnel fact table showing event-level and session-level progression through view, cart, and purchase steps.
+
+    columns:
+      - name: event_date
+        description: Date of the funnel activity.
+        tests:
+          - not_null
+          - unique
+
+      - name: total_events
+        description: Total clickstream events on the date.
+        tests:
+          - not_null
+
+      - name: active_users
+        description: Distinct users active on the date.
+        tests:
+          - not_null
+
+      - name: sessions
+        description: Distinct sessions active on the date.
+        tests:
+          - not_null
+
+      - name: view_events
+        description: Number of product view events.
+        tests:
+          - not_null
+
+      - name: cart_events
+        description: Number of cart events.
+        tests:
+          - not_null
+
+      - name: purchase_events
+        description: Number of purchase events.
+        tests:
+          - not_null
+
+      - name: sessions_with_view
+        description: Number of sessions containing at least one view event.
+
+      - name: sessions_with_cart
+        description: Number of sessions containing at least one cart event.
+
+      - name: sessions_with_purchase
+        description: Number of sessions containing at least one purchase event.
+
+      - name: event_view_to_cart_rate
+        description: Event-level view-to-cart conversion rate.
+
+      - name: event_cart_to_purchase_rate
+        description: Event-level cart-to-purchase conversion rate.
+
+      - name: event_view_to_purchase_rate
+        description: Event-level view-to-purchase conversion rate.
+
+      - name: session_view_to_cart_rate
+        description: Session-level view-to-cart conversion rate.
+
+      - name: session_cart_to_purchase_rate
+        description: Session-level cart-to-purchase conversion rate.
+
+      - name: session_view_to_purchase_rate
+        description: Session-level view-to-purchase conversion rate.
