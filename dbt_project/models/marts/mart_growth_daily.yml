@@ -1,0 +1,123 @@
+version: 2
+
+models:
+  - name: mart_growth_daily
+    description: Daily growth KPI mart for Tableau dashboards. Combines event activity, sessions, funnel metrics, revenue, and calendar attributes.
+
+    columns:
+      - name: event_date
+        description: Calendar date for the daily KPI row.
+        tests:
+          - not_null
+          - unique
+
+      - name: day_of_month
+        description: Day number within the month.
+
+      - name: month_number
+        description: Month number.
+
+      - name: month_name
+        description: Month name.
+
+      - name: year_number
+        description: Year number.
+
+      - name: quarter_number
+        description: Quarter number.
+
+      - name: day_of_week_number
+        description: Day of week number.
+
+      - name: day_of_week_name
+        description: Day of week name.
+
+      - name: week_start_date
+        description: Start date of the reporting week.
+
+      - name: month_start_date
+        description: Start date of the reporting month.
+
+      - name: is_weekend
+        description: Weekend flag.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: total_events
+        description: Total clickstream events for the day.
+        tests:
+          - not_null
+
+      - name: active_users
+        description: Distinct users active on the day.
+        tests:
+          - not_null
+
+      - name: sessions
+        description: Distinct sessions active on the day.
+        tests:
+          - not_null
+
+      - name: view_events
+        description: Total view events for the day.
+
+      - name: cart_events
+        description: Total cart events for the day.
+
+      - name: funnel_purchase_events
+        description: Purchase events counted from the funnel fact table.
+
+      - name: purchase_events
+        description: Purchase events counted from the conversion fact table.
+
+      - name: purchasing_users
+        description: Distinct users who purchased on the day.
+
+      - name: purchasing_sessions
+        description: Distinct sessions with purchase events on the day.
+
+      - name: total_revenue
+        description: Total purchase revenue for the day.
+        tests:
+          - not_null
+
+      - name: avg_purchase_value
+        description: Average purchase revenue per purchase event.
+
+      - name: sessions_with_view
+        description: Sessions with at least one view event.
+
+      - name: sessions_with_cart
+        description: Sessions with at least one cart event.
+
+      - name: sessions_with_purchase
+        description: Sessions with at least one purchase event.
+
+      - name: event_view_to_cart_rate
+        description: Event-level view-to-cart conversion rate.
+
+      - name: event_cart_to_purchase_rate
+        description: Event-level cart-to-purchase diagnostic rate.
+
+      - name: event_view_to_purchase_rate
+        description: Event-level view-to-purchase conversion rate.
+
+      - name: session_view_to_cart_rate
+        description: Session-level view-to-cart conversion rate.
+
+      - name: session_cart_to_purchase_rate
+        description: Session-level cart-to-purchase diagnostic rate.
+
+      - name: session_view_to_purchase_rate
+        description: Session-level view-to-purchase conversion rate.
+
+      - name: revenue_per_active_user
+        description: Revenue divided by active users.
+
+      - name: revenue_per_session
+        description: Revenue divided by sessions.
+
+      - name: purchase_events_per_session_pct
+        description: Purchase events as a percentage of sessions.
