@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: Calendar dimension generated from the minimum and maximum event dates in the clickstream dataset.
+
+    columns:
+      - name: date_day
+        description: Calendar date.
+        tests:
+          - not_null
+          - unique
+
+      - name: day_of_month
+        description: Day of the month.
+
+      - name: month_number
+        description: Month number from 1 to 12.
+
+      - name: year_number
+        description: Calendar year.
+
+      - name: quarter_number
+        description: Calendar quarter.
+
+      - name: day_of_week_number
+        description: Day of week number where Sunday is 0 and Saturday is 6.
+
+      - name: day_of_week_name
+        description: Name of the day of week.
+
+      - name: month_name
+        description: Name of the month.
+
+      - name: week_start_date
+        description: Start date of the week.
+
+      - name: month_start_date
+        description: Start date of the month.
+
+      - name: quarter_start_date
+        description: Start date of the quarter.
+
+      - name: year_start_date
+        description: Start date of the year.
+
+      - name: is_weekend
+        description: Flag indicating whether the date falls on a weekend.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
