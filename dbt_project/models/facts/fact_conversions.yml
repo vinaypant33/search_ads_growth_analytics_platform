@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: fact_conversions
+    description: Purchase-level conversion fact table. One row represents one purchase event and is used for revenue and monetization analytics.
+
+    columns:
+      - name: conversion_id
+        description: Unique conversion identifier derived from the source event_id.
+        tests:
+          - not_null
+          - unique
+
+      - name: event_time
+        description: Timestamp of the purchase event.
+        tests:
+          - not_null
+
+      - name: event_date
+        description: Purchase event date.
+        tests:
+          - not_null
+
+      - name: event_hour
+        description: Hour of the purchase event.
+
+      - name: event_day_of_week
+        description: Day of week of the purchase event.
+
+      - name: event_month
+        description: Month of the purchase event.
+
+      - name: user_id
+        description: User who completed the purchase.
+        tests:
+          - not_null
+
+      - name: user_session
+        description: Session in which the purchase event occurred.
+
+      - name: product_id
+        description: Purchased product identifier.
+        tests:
+          - not_null
+
+      - name: category_id
+        description: Category identifier for the purchased product.
+
+      - name: revenue
+        description: Purchase revenue amount from the event price field.
+        tests:
+          - not_null
+
+      - name: is_missing_revenue
+        description: Flag indicating whether the purchase event had missing price/revenue.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: source_file
+        description: Source file from which the event was loaded.
+
+      - name: loaded_at
+        description: Timestamp when the event was loaded into the raw table.
+        
