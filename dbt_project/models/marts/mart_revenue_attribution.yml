@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: mart_revenue_attribution
+    description: Daily revenue attribution mart by category, brand, and product metadata. Built from purchase conversions joined with the product dimension.
+
+    columns:
+      - name: event_date
+        description: Purchase event date.
+        tests:
+          - not_null
+
+      - name: event_month
+        description: Purchase event month.
+
+      - name: category_id
+        description: Numeric category identifier.
+
+      - name: category_code
+        description: Product category code used for attribution.
+        tests:
+          - not_null
+
+      - name: brand
+        description: Product brand used for attribution.
+        tests:
+          - not_null
+
+      - name: is_unknown_category
+        description: Flag showing whether category_code is unknown.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: is_unknown_brand
+        description: Flag showing whether brand is unknown.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: purchase_events
+        description: Number of purchase events for the category/brand/date combination.
+        tests:
+          - not_null
+
+      - name: purchasing_users
+        description: Number of distinct purchasing users.
+
+      - name: purchasing_sessions
+        description: Number of distinct purchasing sessions.
+
+      - name: purchased_products
+        description: Number of distinct purchased products.
+
+      - name: total_revenue
+        description: Total revenue for the category/brand/date combination.
+        tests:
+          - not_null
+
+      - name: avg_purchase_value
+        description: Average purchase value.
+
+      - name: min_purchase_value
+        description: Minimum purchase value.
+
+      - name: max_purchase_value
+        description: Maximum purchase value.
