@@ -1,0 +1,55 @@
+name: dbt PR Check
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  dbt-parse-check:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: dbt_project
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dbt
+        run: |
+          python -m pip install --upgrade pip
+          pip install dbt-postgres
+
+      - name: Create CI dbt profile
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml <<EOF
+          dbt_project:
+            target: ci
+            outputs:
+              ci:
+                type: postgres
+                host: localhost
+                user: ci_user
+                password: ci_password
+                port: 5432
+                dbname: ci_database
+                schema: dbt_ci
+                threads: 4
+          EOF
+
+      - name: Parse dbt project
+        run: dbt parse
+
+      - name: Compile dbt project
+        run: dbt compile
