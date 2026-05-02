@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: dim_product
+    description: Product dimension table created from the MySQL product master source synced into PostgreSQL raw layer. Contains product category and brand metadata for attribution analysis.
+
+    columns:
+      - name: product_id
+        description: Unique product identifier.
+        tests:
+          - not_null
+          - unique
+
+      - name: category_id
+        description: Numeric category identifier.
+
+      - name: category_code
+        description: Product category code. Missing source values are standardized as unknown.
+        tests:
+          - not_null
+
+      - name: brand
+        description: Product brand. Missing source values are standardized as unknown.
+        tests:
+          - not_null
+
+      - name: is_unknown_category
+        description: Flag showing whether category_code is unknown.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: is_unknown_brand
+        description: Flag showing whether brand is unknown.
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+
+      - name: source_system
+        description: Source system for product metadata.
+
+      - name: loaded_at
+        description: Timestamp when the product record was synced into PostgreSQL.

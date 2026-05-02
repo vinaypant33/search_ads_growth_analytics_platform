@@ -30,3 +30,29 @@ Happy modeling!
 {"data":{},"info":{"category":"","code":"","extra":{},"invocation_id":"019de412-a8b7-7f32-84dd-65e47dfb1e97","level":"debug","msg":"No active cloud project configured, skipping remote license","name":"Generic","pid":56620,"thread":"tokio-rt-worker","ts":"2026-05-01T15:05:21.370146Z"}}
 {"data":{"columns":[],"is_inline":true,"node_name":"license_info","output_format":"json","preview":"{\n  \"status\": \"not_found\",\n  \"licensing_enabled\": true\n}","unique_id":"license.info"},"info":{"category":"","code":"Q041","extra":{},"invocation_id":"019de412-a8b7-7f32-84dd-65e47dfb1e97","level":"info","msg":"{\n  \"status\": \"not_found\",\n  \"licensing_enabled\": true\n}","name":"ShowNode","pid":56620,"thread":"tokio-rt-worker","ts":"2026-05-01T15:05:21.371464Z"}}
 {"data":{"completed_at":"2026-05-01T15:05:21.615642Z","elapsed":0.25479719042778015,"success":true},"info":{"category":"","code":"Q039","extra":{},"invocation_id":"019de412-a8b7-7f32-84dd-65e47dfb1e97","level":"info","msg":"\n==================== Execution Summary =====================\nFinished 'license' successfully [254ms]","name":"CommandCompleted","pid":56620,"thread":"tokio-rt-worker","ts":"2026-05-01T15:05:21.616982Z"}}
+[0m07:11:50.111098 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 07:11:50.164536 | 5c8a3200-a468-4b68-bd45-7df3dbd15161 ==============================
+[0m07:11:50.164536 [info ] [MainThread]: Running with dbt=1.7.19
+[0m07:11:50.165532 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\vinay\\.dbt', 'debug': 'False', 'fail_fast': 'False', 'log_path': 'logs', 'version_check': 'True', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'invocation_command': 'dbt build --select dim_product', 'introspect': 'True', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m07:11:50.166533 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\vinay\Desktop\github\search_ads_growth_analytics_platform\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m07:11:50.166533 [debug] [MainThread]: Command `dbt build` failed at 07:11:50.166533 after 0.08 seconds
+[0m07:11:50.166533 [debug] [MainThread]: Flushing usage events
+[0m07:11:59.401009 [debug] [MainThread]: Got an exception trying to initialize tracking
+
+
+============================== 07:11:59.446875 | f7cd70d9-79fa-49f9-bdb9-ed7db9ea0661 ==============================
+[0m07:11:59.446875 [info ] [MainThread]: Running with dbt=1.7.19
+[0m07:11:59.447407 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'version_check': 'True', 'log_path': 'logs', 'fail_fast': 'False', 'profiles_dir': 'C:\\Users\\vinay\\.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt build --select dim_product', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m07:11:59.447407 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\vinay\Desktop\github\search_ads_growth_analytics_platform\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m07:11:59.448418 [debug] [MainThread]: Command `dbt build` failed at 07:11:59.448418 after 0.07 seconds
+[0m07:11:59.448418 [debug] [MainThread]: Flushing usage events
