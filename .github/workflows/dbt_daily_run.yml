@@ -48,5 +48,3 @@ jobs:
       - name: Parse dbt project
         run: dbt parse
 
-      - name: Compile dbt project
-        run: dbt compile
