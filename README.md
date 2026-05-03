@@ -1,83 +1,58 @@
 # Search & Ads Growth Analytics Platform
 
-> End-to-end product analytics pipeline for e-commerce clickstream data — built with PostgreSQL, dbt Core, Tableau, and GitHub Actions.
+<p align="center">
+  <img src="https://img.shields.io/badge/Project-Analytics%20Engineering-black?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Data%20Warehouse-PostgreSQL-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Transformations-dbt%20Core-orange?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Visualization-Tableau-blueviolet?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Automation-GitHub%20Actions-lightgrey?style=for-the-badge"/>
+</p>
 
-This project follows a **production-style analytics engineering workflow**, not just a CSV dropped into a dashboard. Business logic lives in dbt. Tableau is the presentation layer only.
-
----
-
-## Table of Contents
-
-- [Project Objective](#project-objective)
-- [Business Problem](#business-problem)
-- [Architecture](#architecture)
-- [Data Warehouse Layers](#data-warehouse-layers)
-- [dbt Models](#dbt-models)
-- [Key Metrics](#key-metrics)
-- [Tech Stack](#tech-stack)
-- [Repository Structure](#repository-structure)
-- [How to Run](#how-to-run)
-- [Screenshots](#screenshots)
-- [Design Decisions](#design-decisions)
-- [Future Improvements](#future-improvements)
+<p align="center">
+  <b>End-to-end product analytics pipeline for e-commerce clickstream, growth, funnel, revenue, and experimentation analysis</b>
+</p>
 
 ---
 
-## Project Objective
+## Overview
 
-Most analytics portfolio projects start from a flat CSV loaded directly into Tableau or Power BI.
+This project is an **end-to-end analytics engineering platform** built for e-commerce clickstream and product growth analysis.
 
-This project takes a different approach — one closer to how analytics engineering works in practice:
+It follows a production-style analytics workflow where raw event data is ingested into PostgreSQL, transformed and tested using dbt Core, exported into Tableau-ready mart tables, and validated through GitHub Actions.
 
-```
-Raw Clickstream CSV
-        ↓
-Python Ingestion Scripts
-        ↓
-PostgreSQL — Raw Schema
-        ↓
-dbt Staging Models
-        ↓
-dbt Fact & Dimension Models
-        ↓
-dbt Mart Models (Tableau-ready)
-        ↓
-Python Export Script → CSV
-        ↓
-Tableau Public Dashboard
-        ↓
-GitHub Actions CI Validation
-```
-
-The goal is to answer product and growth questions such as:
-
-- How much revenue was generated, and how is it trending?
-- How many users, sessions, and purchases occurred?
-- How do users move from view → cart → purchase?
-- How does conversion rate change over time?
-- Which event types dominate user behaviour?
+This is not just a dashboard project. The dashboard is only the final presentation layer. The main focus is on the **data pipeline, warehouse structure, reusable business logic, tested dbt models, and analytics-ready marts**.
 
 ---
 
-## Business Problem
+## Problem Statement
 
-Growth and product teams need a reliable way to monitor digital funnel performance. A dashboard can show numbers — but it doesn't guarantee those numbers are clean, reusable, or tested.
+Growth and product teams often depend on dashboards to monitor user behaviour, revenue, and funnel performance. However, dashboards alone do not guarantee that the underlying numbers are clean, consistent, reusable, or tested.
 
-This project solves that by building a structured analytics pipeline where all metric logic is prepared and validated in dbt **before** being visualised.
+Common issues include:
 
-The dashboard supports:
+* Business logic hidden inside BI tools
+* No reusable metric layer
+* No testing for core fields and assumptions
+* No clear lineage from raw data to final dashboard
+* Difficulty trusting funnel, conversion, and revenue metrics
 
-- Executive-level growth monitoring
-- Funnel performance review
-- Revenue trend analysis
-- Conversion tracking
-- User activity vs purchase behaviour
+This project solves that by building a structured analytics pipeline where business logic is handled in dbt before the data reaches Tableau.
+
+The platform helps answer questions such as:
+
+* How much revenue was generated, and how is it trending?
+* How many users, sessions, and purchases occurred?
+* How do users move from view → cart → purchase?
+* How does conversion rate change over time?
+* Which event types dominate user behaviour?
+* Which product categories and brands drive revenue?
+* How can experiment results be prepared for business analysis?
 
 ---
 
 ## Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                     Data Sources                                │
 │         Clickstream CSV  ·  Product Master CSV                  │
@@ -127,34 +102,72 @@ The dashboard supports:
 
 ---
 
+## Data Flow
+
+```text
+Raw Clickstream CSV
+        ↓
+Python Ingestion Scripts
+        ↓
+PostgreSQL Raw Schema
+        ↓
+dbt Staging Models
+        ↓
+dbt Fact & Dimension Models
+        ↓
+dbt Mart Models
+        ↓
+Python Export Script
+        ↓
+Tableau Public Dashboard
+        ↓
+GitHub Actions CI Validation
+```
+
+---
+
+## Tech Stack
+
+| Layer | Tools |
+|---|---|
+| Data Source | Clickstream CSV, Product Master CSV |
+| Ingestion | Python |
+| Data Warehouse | PostgreSQL |
+| Transformation | dbt Core |
+| Business Logic | SQL |
+| Testing | dbt tests |
+| Visualization | Tableau Public |
+| Automation / CI | GitHub Actions |
+| Version Control | Git / GitHub |
+
+---
+
 ## Data Warehouse Layers
 
 ### Raw Layer
 
-Raw source data loaded into PostgreSQL with minimal transformation. Source fidelity is preserved for reprocessing.
+Raw source data is loaded into PostgreSQL with minimal transformation. This keeps the original source data available for reprocessing and validation.
 
 | Table | Description |
 |---|---|
-| `raw.raw_events` | Raw clickstream events — view, cart, purchase |
+| `raw.raw_events` | Raw clickstream events such as view, cart, and purchase |
 | `raw.product_dim` | Product master data synced from source |
 
 ---
 
 ### Staging Layer
 
-Standardises and cleans raw event data for all downstream models.
+The staging layer cleans and standardises raw event data for downstream models.
 
 | Model | Key Transformations |
 |---|---|
-| `stg_events` | Timestamp parsing, event type normalisation, user/session field cleaning, product/category prep |
+| `stg_events` | Timestamp parsing, event type normalisation, user/session field cleaning, product/category preparation |
 
 ---
 
-### Facts & Dimensions
+### Fact Models
 
-Reusable analytical models. Facts record events at meaningful grain; dimensions provide context for slicing.
-
-**Fact Models**
+Fact models capture measurable business events at meaningful analytical grain.
 
 | Model | Purpose | Grain |
 |---|---|---|
@@ -162,7 +175,11 @@ Reusable analytical models. Facts record events at meaningful grain; dimensions 
 | `fact_funnel_steps` | Daily funnel movement and conversion metrics | 1 row per day per funnel step |
 | `fact_conversions` | Purchase and revenue records | 1 row per purchase |
 
-**Dimension Models**
+---
+
+### Dimension Models
+
+Dimension models provide descriptive context for slicing and filtering facts.
 
 | Model | Purpose |
 |---|---|
@@ -174,19 +191,19 @@ Reusable analytical models. Facts record events at meaningful grain; dimensions 
 
 ### Mart Layer
 
-Dashboard-ready aggregates exported as CSVs for Tableau Public. These are the only tables Tableau reads.
+Mart models are dashboard-ready aggregates. These are the only tables exported for Tableau.
 
 | Mart | Contents |
 |---|---|
 | `mart_growth_daily` | Daily revenue, active users, sessions, purchases, conversion rate |
-| `mart_revenue_attribution` | Revenue broken down by category and brand |
+| `mart_revenue_attribution` | Revenue breakdown by category and brand |
 | `mart_experiment_results` | Simulated A/B experiment outcomes |
 
 ---
 
 ## dbt Models
 
-### Staging
+### Staging Example
 
 ```sql
 -- stg_events
@@ -208,6 +225,8 @@ from {{ source('raw', 'raw_events') }}
 where event_type in ('view', 'cart', 'purchase')
 ```
 
+---
+
 ### dbt Tests Applied
 
 ```yaml
@@ -226,13 +245,22 @@ models:
         tests: [not_null]
 ```
 
-Tests cover: event IDs, user IDs, session IDs, event types, conversion IDs, product IDs, date fields, and mart-level metrics.
+Tests cover:
+
+* Event IDs
+* User IDs
+* Session IDs
+* Event types
+* Conversion IDs
+* Product IDs
+* Date fields
+* Mart-level metrics
 
 ---
 
 ## Key Metrics
 
-All metrics are computed in dbt before Tableau reads them. No hidden calculated fields.
+All key metrics are calculated in dbt before Tableau reads the data. This keeps the dashboard lightweight and avoids hidden business logic inside Tableau calculated fields.
 
 | Metric | Source Model |
 |---|---|
@@ -251,23 +279,21 @@ All metrics are computed in dbt before Tableau reads them. No hidden calculated 
 
 ---
 
-## Tech Stack
+## Dashboard Highlights
 
-| Tool | Role |
-|---|---|
-| Python | Data ingestion scripts, mart export |
-| PostgreSQL | Raw and analytics warehouse |
-| dbt Core | SQL transformations, testing, lineage |
-| SQL | Core business logic |
-| Tableau Public | Presentation layer |
-| GitHub Actions | CI/CD — dbt parse and compile validation |
-| Git / GitHub | Version control |
+* Revenue trend monitoring
+* Active users, sessions, and purchases tracking
+* View → cart → purchase funnel analysis
+* Daily conversion rate analysis
+* Revenue attribution by category and brand
+* Experiment result preparation
+* Tableau-ready mart exports
 
 ---
 
 ## Repository Structure
 
-```
+```text
 search_ads_growth_analytics_platform/
 │
 ├── .github/
@@ -310,6 +336,38 @@ search_ads_growth_analytics_platform/
 ├── requirements.txt
 └── README.md
 ```
+
+---
+
+## Automation and Validation
+
+The project includes GitHub Actions workflows to simulate production-style validation.
+
+### CI Workflow
+
+```text
+Pull Request / Code Change
+        ↓
+GitHub Actions
+        ↓
+dbt parse / compile validation
+        ↓
+Check whether dbt project is valid
+```
+
+### Scheduled Workflow
+
+```text
+Scheduled Trigger
+        ↓
+GitHub Actions
+        ↓
+dbt daily run workflow
+        ↓
+Pipeline validation
+```
+
+This demonstrates how dbt projects can be checked automatically before changes are merged or scheduled for regular execution.
 
 ---
 
@@ -374,60 +432,103 @@ Open the packaged workbook from `dashboards/tableau/` and connect to the exporte
 
 ## Screenshots
 
-
 ### PostgreSQL Warehouse Layers
+
 <p align="center">
   <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/database/er_diagrams/PG%20Admin%20Screenshot%20of%20Schemas.png" width="500"/>
 </p>
 
-### dbt Build Success
+### Raw Events Table
+
 <p align="center">
   <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/database/er_diagrams/Raw%20Events.png" width="600"/>
 </p>
 
-
 ### dbt Lineage Graph
+
 <p align="center">
   <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/extra_files/Lineage%20Graph/Lineage%20Graph.png" width="600"/>
 </p>
 
-
 ### Tableau Growth Overview Dashboard
+
 <p align="center">
   <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="600"/>
 </p>
-
 
 ---
 
 ## Design Decisions
 
-**Why dbt instead of Tableau calculated fields?**
+### Why dbt instead of Tableau calculated fields?
 
-Business logic in dbt means version-controlled SQL, testable models, a lineage graph, and metrics that can be reused across any BI tool. Tableau calculated fields are invisible inside the workbook and cannot be tested or audited.
+Business logic in dbt means version-controlled SQL, testable models, a lineage graph, and reusable metrics. Tableau is used only as the presentation layer.
 
-**Why no physical foreign key constraints in PostgreSQL?**
+This makes the project closer to a real analytics engineering workflow, where metrics are prepared before they reach the BI tool.
 
-Analytical warehouses use logical relationships through dbt models, joins, and tests — not physical constraints. Models are rebuilt on each run; physical FKs would break incremental load patterns and are not standard in dbt-based workflows.
+---
 
-**Why export to CSV for Tableau?**
+### Why no physical foreign key constraints in PostgreSQL?
 
-Tableau Public does not support live PostgreSQL connections. Mart exports replicate the extract-and-publish pattern used in production Tableau Server and Tableau Cloud setups.
+In a dbt-based analytical warehouse, relationships are usually handled logically through models, joins, documentation, and tests.
 
-**Why GitHub Actions?**
+Physical foreign keys are more common in transactional systems. Analytical models are often rebuilt, refreshed, or materialised through transformation pipelines, so dbt tests are used to validate relationships instead of enforcing every relationship physically in the database.
 
-Two workflows — a PR check (dbt parse/compile) and a scheduled daily run — demonstrate how a production dbt pipeline would be automated and monitored without dbt Cloud.
+---
+
+### Why export to CSV for Tableau?
+
+Tableau Public does not support live PostgreSQL connections. Mart exports replicate an extract-based workflow where curated datasets are prepared and then consumed by the BI layer.
+
+---
+
+### Why GitHub Actions?
+
+GitHub Actions adds automated validation to the project. The workflows show how dbt parsing, compilation, and scheduled checks can be integrated into a production-style analytics workflow without using dbt Cloud.
+
+---
+
+## Business Impact
+
+This platform enables:
+
+* Better visibility into product growth
+* Clearer understanding of user behaviour
+* Funnel performance monitoring
+* Revenue attribution by category and brand
+* Tested and reusable metrics
+* Separation of business logic from dashboard design
+* More reliable reporting for growth and product teams
+
+---
+
+## Project Highlights
+
+* End-to-end analytics engineering pipeline
+* PostgreSQL warehouse with raw, staging, fact, dimension, and mart layers
+* dbt Core models for transformation, testing, and lineage
+* Tableau dashboard connected to curated mart exports
+* GitHub Actions for automated validation
+* Business logic handled before the BI layer
+* Built to reflect real-world product analytics workflows
 
 ---
 
 ## Future Improvements
 
-- Add Airflow orchestration
-- Add dbt Cloud scheduling
-- Deploy to a cloud warehouse (BigQuery or Snowflake)
-- Add retention cohort analysis
-- Add incremental dbt models
-- Add automated Tableau extract refresh
-- Add experiment significance testing
-- Add advanced product and category segmentation
+* Add Airflow orchestration
+* Add dbt Cloud scheduling
+* Deploy to a cloud warehouse such as BigQuery or Snowflake
+* Add retention cohort analysis
+* Add incremental dbt models
+* Add automated Tableau extract refresh
+* Add experiment significance testing
+* Add advanced product and category segmentation
 
+---
+
+## Final Note
+
+This project is designed to show how product analytics can be built as a structured data system, not just as a dashboard.
+
+It demonstrates how raw clickstream data can be ingested, transformed, tested, modelled, and delivered into a business-facing dashboard using a modern analytics engineering workflow.
