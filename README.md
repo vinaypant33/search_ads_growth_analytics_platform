@@ -388,7 +388,7 @@ Open the packaged workbook from `dashboards/tableau/` and connect to the exporte
 
 ### dbt Lineage Graph
 <p align="center">
-  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="800"/>
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/extra_files/Lineage%20Graph/Lineage%20Graph.png" width="800"/>
 </p>
 
 
