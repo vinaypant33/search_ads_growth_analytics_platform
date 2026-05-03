@@ -377,24 +377,24 @@ Open the packaged workbook from `dashboards/tableau/` and connect to the exporte
 
 ### PostgreSQL Warehouse Layers
 <p align="center">
-  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/database/er_diagrams/PG%20Admin%20Screenshot%20of%20Schemas.png" width="800"/>
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/database/er_diagrams/PG%20Admin%20Screenshot%20of%20Schemas.png" width="500"/>
 </p>
 
 ### dbt Build Success
 <p align="center">
-  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/database/er_diagrams/Raw%20Events.png" width="800"/>
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/database/er_diagrams/Raw%20Events.png" width="600"/>
 </p>
 
 
 ### dbt Lineage Graph
 <p align="center">
-  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/extra_files/Lineage%20Graph/Lineage%20Graph.png" width="800"/>
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/extra_files/Lineage%20Graph/Lineage%20Graph.png" width="600"/>
 </p>
 
 
 ### Tableau Growth Overview Dashboard
 <p align="center">
-  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="800"/>
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="600"/>
 </p>
 
 
