@@ -390,7 +390,10 @@ Open the packaged workbook from `dashboards/tableau/` and connect to the exporte
 ![GitHub Actions Validation](docs/screenshots/09_github_actions_dbt_validation.png)
 
 ### Tableau Growth Overview Dashboard
-"https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png"
+<p align="center">
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="800"/>
+</p>
+
 
 ---
 
