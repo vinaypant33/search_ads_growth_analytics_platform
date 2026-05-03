@@ -374,20 +374,23 @@ Open the packaged workbook from `dashboards/tableau/` and connect to the exporte
 
 ## Screenshots
 
-### PostgreSQL Warehouse Layers
-![PostgreSQL Warehouse Layers](docs/screenshots/02_postgres_warehouse_layers.png)
 
-### dbt Model Structure
-![dbt Model Structure](docs/screenshots/05_dbt_model_structure.png)
+### PostgreSQL Warehouse Layers
+<p align="center">
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="800"/>
+</p>
 
 ### dbt Build Success
-![dbt Build Success](docs/screenshots/06_dbt_build_success.png)
+<p align="center">
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="800"/>
+</p>
+
 
 ### dbt Lineage Graph
-![dbt Lineage Graph](docs/screenshots/07_dbt_lineage_graph.png)
+<p align="center">
+  <img src="https://github.com/vinaypant33/search_ads_growth_analytics_platform/blob/main/dashboards/screenshots/Dashbaord%20Screenshot.png" width="800"/>
+</p>
 
-### GitHub Actions Validation
-![GitHub Actions Validation](docs/screenshots/09_github_actions_dbt_validation.png)
 
 ### Tableau Growth Overview Dashboard
 <p align="center">
